@@ -67,7 +67,10 @@ function onBackupExport() {
         defaultPath: remote.app.getPath('downloads'),
         properties: ['openDirectory'],
       }
-      remote.dialog.showOpenDialog(opts, (filenames: string[]) => {
+      remote.dialog.showOpenDialog(remote.getCurrentWindow()).then((returnValue) => {
+
+        const filenames = returnValue.filePaths
+
         if (!filenames || !filenames.length) return
         openDialog(ExportProgressDialog)
         DeltaBackend.call('backup.export', filenames[0])

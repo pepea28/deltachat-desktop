@@ -3,8 +3,8 @@ import electron, {
   BrowserWindow,
   Rectangle,
   ipcMain,
-  EventEmitter,
 } from 'electron'
+import {EventEmitter} from 'events';
 import { appWindowTitle } from '../../shared/constants'
 import { getLogger } from '../../shared/logger'
 import { appIcon, windowDefaults } from '../application-constants'

@@ -61,16 +61,17 @@ const Composer = forwardRef<
 
   const addFilename = () => {
     remote.dialog.showOpenDialog(
-      { properties: ['openFile'] },
-      (filenames: string[]) => {
-        if (filenames && filenames[0]) {
-          chatStoreDispatch({
-            type: 'SEND_MESSAGE',
-            payload: [chatId, '', filenames[0]],
-          })
-        }
+        remote.getCurrentWindow(),
+      { properties: ['openFile'] }
+      ).then((returnValue) => {
+        const filenames = returnValue.filePaths
+      if (filenames && filenames[0]) {
+        chatStoreDispatch({
+          type: 'SEND_MESSAGE',
+          payload: [chatId, '', filenames[0]],
+        })
       }
-    )
+    })
   }
 
   const onEmojiIconClick = () => setShowEmojiPicker(!showEmojiPicker)

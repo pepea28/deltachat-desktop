@@ -81,6 +81,8 @@ export function updateTrayMenu() {
     ).enabled = mainWindow.window.isVisible()
 
     // Called to update menu on Linux
-    tray.setContextMenu(contextMenu)
+    if (tray !== null && !tray.isDestroyed()) {
+      tray.setContextMenu(contextMenu)
+    }
   }
 }

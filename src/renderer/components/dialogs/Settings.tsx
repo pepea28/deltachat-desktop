@@ -371,12 +371,13 @@ function ProfileImageSelector(props: any) {
 
   const openSelectionDialog = () => {
     remote.dialog.showOpenDialog(
+        remote.getCurrentWindow(),
       {
         title: tx('select_profile_image_desktop'),
         filters: [{ name: 'Images', extensions: ['jpg', 'png', 'gif'] }],
         properties: ['openFile'],
-      },
-      async (files: string[]) => {
+      }).then(async (returnValue) => {
+        const files = returnValue.filePaths
         if (Array.isArray(files) && files.length > 0) {
           changeProfilePicture(files[0])
         }

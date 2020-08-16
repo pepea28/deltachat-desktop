@@ -19,7 +19,7 @@ declare global {
       ipcRenderer: import('electron').IpcRenderer
       remote: import('electron').Remote
       openExternal: typeof Electron.shell.openExternal
-      openItem: typeof Electron.shell.openItem
+      openItem: typeof Electron.shell.openPath
     }
     preload_functions: {
       downloadFile: (file: string) => void

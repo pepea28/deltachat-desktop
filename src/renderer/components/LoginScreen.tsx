@@ -106,18 +106,18 @@ const ImportButton = function ImportButton(props: any) {
 
   function onClickImportBackup() {
     remote.dialog.showOpenDialog(
+        remote.getCurrentWindow(),
       {
         title: tx('import_backup_title'),
         properties: ['openFile'],
         filters: [{ name: 'DeltaChat .bak', extensions: ['bak'] }],
-      },
-      (filenames: string[]) => {
-        if (!filenames || !filenames.length) return
-        window.__openDialog(ImportBackupProgressDialog, {
-          backupFile: filenames[0],
-        })
-      }
-    )
+      }).then((returnValue) => {
+        const filenames = returnValue.filePaths
+      if (!filenames || !filenames.length) return
+      window.__openDialog(ImportBackupProgressDialog, {
+        backupFile: filenames[0],
+      })
+    })
   }
 
   return (

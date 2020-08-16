@@ -1,7 +1,8 @@
 console.time('init')
 
 import { ensureDirSync, watchFile } from 'fs-extra'
-import { app as rawApp, session, EventEmitter, dialog } from 'electron'
+import { app as rawApp, session, dialog } from 'electron'
+import {EventEmitter} from 'events';
 import rc from './rc'
 
 const app = rawApp as ExtendedAppMainProcess
@@ -174,7 +175,7 @@ app.on('web-contents-created', (e, contents) => {
   })
 })
 
-let contentSecurity = "default-src ' 'none'"
+let contentSecurity = "default-src ' 'self' 'none'"
 if (process.env.NODE_ENV === 'test') {
   contentSecurity =
     "default-src 'unsafe-inline' 'self' 'unsafe-eval'; img-src 'self' data:;"

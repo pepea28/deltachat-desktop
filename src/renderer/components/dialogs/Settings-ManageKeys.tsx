@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Elevation, H5, Button } from '@blueprintjs/core'
 import { SettingsButton } from './Settings'
-import { OpenDialogOptions } from 'electron'
+import {ipcMain, OpenDialogOptions} from 'electron'
 import { DeltaBackend } from '../../delta-remote'
 import { confirmationDialogLegacy as confirmationDialog } from './ConfirmationDialog'
 import { ipcBackend } from '../../ipc'
@@ -17,7 +17,9 @@ function onKeysImport() {
     properties: ['openDirectory'],
   }
 
-  remote.dialog.showOpenDialog(opts, (filenames: string[]) => {
+  remote.dialog.showOpenDialog(remote.getCurrentWindow(), opts).then((returnValue) => {
+    const filenames = returnValue.filePaths
+
     if (!filenames || !filenames.length) return
 
     const title = tx('pref_managekeys_import_explain', filenames[0])
@@ -47,7 +49,10 @@ function onKeysExport() {
     properties: ['openDirectory'],
   }
 
-  remote.dialog.showOpenDialog(opts, (filenames: string[]) => {
+  remote.dialog.showOpenDialog(remote.getCurrentWindow()).then((returnValue) => {
+
+    const filenames = returnValue.filePaths
+
     if (!filenames || !filenames.length) return
     const title = tx('pref_managekeys_export_explain').replace(
       '%1$s',

@@ -139,13 +139,14 @@ export default class DCSettings extends SplitOut {
             ],
             properties: ['openFile'],
           },
-          (filenames: string[]) => {
-            if (!filenames) {
-              return
+        ).then((returnValue) => {
+              if (!returnValue) {
+                return
+              }
+              const filenames = returnValue.filePaths
+              log.info('BG-IMG Selected File:', filenames[0])
+              copyAndSetBg(filenames[0])
             }
-            log.info('BG-IMG Selected File:', filenames[0])
-            copyAndSetBg(filenames[0])
-          }
         )
       } else {
         const filepath = join(__dirname, '../../../images/backgrounds/', file)
