@@ -67,14 +67,15 @@ function onBackupExport() {
         defaultPath: remote.app.getPath('downloads'),
         properties: ['openDirectory'],
       }
-      remote.dialog.showOpenDialog(remote.getCurrentWindow()).then((returnValue) => {
+      remote.dialog
+        .showOpenDialog(remote.getCurrentWindow())
+        .then(returnValue => {
+          const filenames = returnValue.filePaths
 
-        const filenames = returnValue.filePaths
-
-        if (!filenames || !filenames.length) return
-        openDialog(ExportProgressDialog)
-        DeltaBackend.call('backup.export', filenames[0])
-      })
+          if (!filenames || !filenames.length) return
+          openDialog(ExportProgressDialog)
+          DeltaBackend.call('backup.export', filenames[0])
+        })
     },
   })
 }

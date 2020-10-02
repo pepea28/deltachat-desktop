@@ -2,7 +2,7 @@ console.time('init')
 
 import { ensureDirSync, watchFile } from 'fs-extra'
 import { app as rawApp, session, dialog } from 'electron'
-import {EventEmitter} from 'events';
+import { EventEmitter } from 'events'
 import rc from './rc'
 
 const app = rawApp as ExtendedAppMainProcess

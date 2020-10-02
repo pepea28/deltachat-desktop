@@ -129,25 +129,23 @@ export default class DCSettings extends SplitOut {
       }
 
       if (!file) {
-        dialog.showOpenDialog(
-          undefined,
-          {
+        dialog
+          .showOpenDialog(undefined, {
             title: 'Select Background Image',
             filters: [
               { name: 'Images', extensions: ['jpg', 'png', 'gif', 'webp'] },
               { name: 'All Files', extensions: ['*'] },
             ],
             properties: ['openFile'],
-          },
-        ).then((returnValue) => {
-              if (!returnValue) {
-                return
-              }
-              const filenames = returnValue.filePaths
-              log.info('BG-IMG Selected File:', filenames[0])
-              copyAndSetBg(filenames[0])
+          })
+          .then(returnValue => {
+            if (!returnValue) {
+              return
             }
-        )
+            const filenames = returnValue.filePaths
+            log.info('BG-IMG Selected File:', filenames[0])
+            copyAndSetBg(filenames[0])
+          })
       } else {
         const filepath = join(__dirname, '../../../images/backgrounds/', file)
         copyAndSetBg(filepath)

@@ -1,10 +1,6 @@
 import debounce from 'debounce'
-import electron, {
-  BrowserWindow,
-  Rectangle,
-  ipcMain,
-} from 'electron'
-import {EventEmitter} from 'events';
+import electron, { BrowserWindow, Rectangle, ipcMain } from 'electron'
+import { EventEmitter } from 'events'
 import { appWindowTitle } from '../../shared/constants'
 import { getLogger } from '../../shared/logger'
 import { appIcon, windowDefaults } from '../application-constants'
@@ -39,6 +35,7 @@ export function init(
     x: initialBounds.x,
     y: initialBounds.y,
     webPreferences: {
+      enableRemoteModule: true,
       nodeIntegration: false,
       preload: defaults.preload,
     },

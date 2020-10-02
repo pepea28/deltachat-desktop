@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Elevation, H5, Button } from '@blueprintjs/core'
 import { SettingsButton } from './Settings'
-import {ipcMain, OpenDialogOptions} from 'electron'
+import { ipcMain, OpenDialogOptions } from 'electron'
 import { DeltaBackend } from '../../delta-remote'
 import { confirmationDialogLegacy as confirmationDialog } from './ConfirmationDialog'
 import { ipcBackend } from '../../ipc'
@@ -17,25 +17,27 @@ function onKeysImport() {
     properties: ['openDirectory'],
   }
 
-  remote.dialog.showOpenDialog(remote.getCurrentWindow(), opts).then((returnValue) => {
-    const filenames = returnValue.filePaths
+  remote.dialog
+    .showOpenDialog(remote.getCurrentWindow(), opts)
+    .then(returnValue => {
+      const filenames = returnValue.filePaths
 
-    if (!filenames || !filenames.length) return
+      if (!filenames || !filenames.length) return
 
-    const title = tx('pref_managekeys_import_explain', filenames[0])
-    confirmationDialog(title, (response: todo) => {
-      if (!response) return
-      const text = tx(
-        'pref_managekeys_secret_keys_imported_from_x',
-        filenames[0]
-      )
-      ipcBackend.on('DC_EVENT_IMEX_PROGRESS', (_event, progress) => {
-        if (progress !== 1000) return
-        this.props.userFeedback({ type: 'success', text })
+      const title = tx('pref_managekeys_import_explain', filenames[0])
+      confirmationDialog(title, (response: todo) => {
+        if (!response) return
+        const text = tx(
+          'pref_managekeys_secret_keys_imported_from_x',
+          filenames[0]
+        )
+        ipcBackend.on('DC_EVENT_IMEX_PROGRESS', (_event, progress) => {
+          if (progress !== 1000) return
+          this.props.userFeedback({ type: 'success', text })
+        })
+        DeltaBackend.call('settings.keysImport', filenames[0])
       })
-      DeltaBackend.call('settings.keysImport', filenames[0])
     })
-  })
 }
 
 function onKeysExport() {
@@ -49,8 +51,7 @@ function onKeysExport() {
     properties: ['openDirectory'],
   }
 
-  remote.dialog.showOpenDialog(remote.getCurrentWindow()).then((returnValue) => {
-
+  remote.dialog.showOpenDialog(remote.getCurrentWindow()).then(returnValue => {
     const filenames = returnValue.filePaths
 
     if (!filenames || !filenames.length) return
